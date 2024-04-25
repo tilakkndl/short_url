@@ -7,6 +7,7 @@ const generateShortId = async(req, res)=>{
     console.log(req.body)
     const url = req.body.url
     if(!url){
+        console.log("here")
         return res.status(401).json({message: "url is required"})
     }
 
@@ -18,10 +19,12 @@ const data = {shortId, fullId: url, history: {timestamp: []}}
 
 const response = await Url.create(data)
 
-return res.status(201).json({
-    shortId,
-    data: response
-})
+// return res.status(201).json({
+//     shortId,
+//     data: response
+// })
+const urls = await Url.find({})
+return res.render("home", {id: shortId, urls})
 }
 
 const redirectUrl = async(req, res)=>{

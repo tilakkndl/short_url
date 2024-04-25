@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Short URL</title>
+</head>
+<body>
+    
+    <h1>Hello from server</h1>
+    <% if(locals.id) %>
+        <p>Generated Url = localhost:8000/api/url/<%= locals.id%></p>
+    <form action="/api/url" method="post"> <!-- removed the comma after "/api/url" -->
+        <label for="url">Type your long url</label>
+        <input type="text" name="url" placeholder="example.com"> <!-- corrected placeholder value -->
+        <input type="submit" value="Generate"> <!-- corrected spelling of "Generate" -->
+    </form>
+
+    <% if(locals.urls) %>
+        <table>
+            <thead>
+                <tr>
+                <th>S.No</th>
+                <th>Short</th>
+                <th>Redirect</th>
+                <th>Clicks</th>
+                <th>No of clicks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% urls.forEach((url, index) => { %>
+                    <tr>
+                    <td><%= index+1 %></td>
+                    <td><%= url.shortId %></td>
+                    <td><%= url.fullId %></td>
+                   <td> <input type="button" onclick="window.location.href='<%= url.fullId %>'" value="click"></td>
+                   <td><%= url.history.timestamp.length %></td>
+                </tr>
+                <% });   %>
+            </tbody>
+        </table>
+</body>
+</html>
